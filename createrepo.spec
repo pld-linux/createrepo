@@ -9,8 +9,8 @@ Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar
 # Source0-md5:	b1f07dd576cf604e28173d4a18897468
 # Source0-size:	20480
 URL:		http://linux.duke.edu/metadata/
-BuildRequires:  python-devel
-BuildRequires:  python-modules
+BuildRequires:	python-devel
+BuildRequires:	python-modules
 %pyrequires_eq  python
 Requires:	python-libxml2
 Requires:	python-rpm
