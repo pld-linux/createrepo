@@ -7,7 +7,6 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar.gz
 # Source0-md5:	63a9dfca1fc6040bcad689133b0753e0
-# Source0-size:	20480
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
