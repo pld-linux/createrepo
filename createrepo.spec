@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.python
 Summary:	Creates a common metadata repository
 Summary(pl):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
