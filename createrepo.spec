@@ -39,5 +39,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py
+%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py
 %{_mandir}/man8/createrepo.8*
