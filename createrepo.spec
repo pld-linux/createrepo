@@ -1,12 +1,12 @@
 Summary:	Creates a common metadata repository
 Summary(pl):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
-Version:	0.4.2
+Version:	0.4.3
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar.gz
-# Source0-md5:	63a9dfca1fc6040bcad689133b0753e0
+# Source0-md5:	49988da42b354f3acaa833ae271e9a18
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
