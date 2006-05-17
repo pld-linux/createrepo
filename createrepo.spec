@@ -10,6 +10,7 @@ Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 %pyrequires_eq  python
 Requires:	python-libxml2
 Requires:	python-rpm
@@ -29,7 +30,6 @@ pakietów RPM.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %makeinstall
 
 %clean
