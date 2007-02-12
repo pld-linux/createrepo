@@ -1,5 +1,5 @@
 Summary:	Creates a common metadata repository
-Summary(pl):	Tworzenie wspólnego repozytorium metadanych
+Summary(pl.UTF-8):   Tworzenie wspÃ³lnego repozytorium metadanych
 Name:		createrepo
 Version:	0.4.6
 Release:	1
@@ -21,9 +21,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This utility will generate a common metadata repository from a
 directory of RPM packages.
 
-%description -l pl
-To narzêdzie tworzy wspólne repozytorium metadanych z katalogu
-pakietów RPM.
+%description -l pl.UTF-8
+To narzÄ™dzie tworzy wspÃ³lne repozytorium metadanych z katalogu
+pakietÃ³w RPM.
 
 %prep
 %setup -q
