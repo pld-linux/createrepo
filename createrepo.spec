@@ -1,5 +1,5 @@
 Summary:	Creates a common metadata repository
-Summary(pl.UTF-8):   Tworzenie wspólnego repozytorium metadanych
+Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.4.6
 Release:	1
