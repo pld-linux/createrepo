@@ -1,0 +1,65 @@
+diff -u createrepo-0.4.8/dumpMetadata.py createrepo-0.4.8-new/dumpMetadata.py
+--- createrepo-0.4.8/dumpMetadata.py	2007-02-13 05:44:10.000000000 +0100
++++ createrepo-0.4.8-new/dumpMetadata.py	2007-05-26 21:06:25.604682473 +0200
+@@ -286,13 +286,13 @@
+             return returnflags
+ 
+         if type(flags) is not types.ListType:
+-            newflag = flags & 0xf
++            newflag = flags & (0xf | (1<<19))
+             returnflags.append(newflag)
+         else:
+             for flag in flags:
+                 newflag = flag
+                 if flag is not None:
+-                    newflag = flag & 0xf
++                    newflag = flag & (0xf | (1<<19))
+                 returnflags.append(newflag)
+         return returnflags
+ 
+@@ -660,12 +660,15 @@
+                 entry = rpconode.newChild(formatns, 'entry', None)
+                 entry.newProp('name', name)
+                 if flags != 0:
+-                    if flags == 2: arg = 'LT'
+-                    if flags == 4: arg = 'GT'
+-                    if flags == 8: arg = 'EQ'
+-                    if flags == 10: arg = 'LE'
+-                    if flags == 12: arg = 'GE'
+-                    entry.newProp('flags', arg)
++                    arg = []
++                    if flags & (1<<19): arg.append('MISSINGOK')
++                    flags = flags & 0xf
++                    if flags == 2: arg.append('LT')
++                    if flags == 4: arg.append('GT')
++                    if flags == 8: arg.append('EQ')
++                    if flags == 10: arg.append('LE')
++                    if flags == 12: arg.append('GE')
++                    entry.newProp('flags', ','.join(arg))
+                     # if we've got a flag we've got a version, I hope :)
+                     if str(e):
+                         entry.newProp('epoch', str(e))
+@@ -681,12 +684,17 @@
+             entry = rpconode.newChild(formatns, 'entry', None)
+             entry.newProp('name', name)
+             if flags != 0:
+-                if flags == 2: arg = 'LT'
+-                if flags == 4: arg = 'GT'
+-                if flags == 8: arg = 'EQ'
+-                if flags == 10: arg = 'LE'
+-                if flags == 12: arg = 'GE'
+-                entry.newProp('flags', arg)
++                arg = []
++                if name == 'foobar':
++                    print '\n\ngot flags = %d for %s\n\n' % (flags, name)
++                if flags & (1<<19): arg.append('MISSINGOK')
++                flags = flags & 0xf
++                if flags == 2: arg.append('LT')
++                if flags == 4: arg.append('GT')
++                if flags == 8: arg.append('EQ')
++                if flags == 10: arg.append('LE')
++                if flags == 12: arg.append('GE')
++                entry.newProp('flags', ','.join(arg))
+                 # if we've got a flag we've got a version, I hope :)
+                 if str(e):
+                     entry.newProp('epoch', str(e))
