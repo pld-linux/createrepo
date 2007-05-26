@@ -7,6 +7,7 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar.gz
 # Source0-md5:	49bab91ec050316352b6d8f0f450f060
+Patch0:		%{name}-missingok.patch
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
@@ -28,6 +29,7 @@ pakietów RPM.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
