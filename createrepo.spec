@@ -15,6 +15,7 @@ BuildRequires:	rpm-pythonprov
 %pyrequires_eq  python
 Requires:	python-libxml2
 Requires:	python-rpm
+Requires:	python-sqlite1
 Requires:	yum-metadata-parser
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
