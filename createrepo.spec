@@ -2,7 +2,7 @@ Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.4.10
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar.gz
@@ -43,8 +43,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
-%{_datadir}/%{name}/genpkgmetadata.py
-%{_datadir}/%{name}/dumpMetadata.py
-%{_datadir}/%{name}/modifyrepo.py
-%{_datadir}/%{name}/readMetadata.py
+# note that these DO NEED executable bit set!
+%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py
+%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py
+%attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py
+%attr(755,root,root) %{_datadir}/%{name}/readMetadata.py
 %{_mandir}/man8/createrepo.8*
