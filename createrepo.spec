@@ -35,6 +35,9 @@ pakietów RPM.
 rm -rf $RPM_BUILD_ROOT
 %makeinstall
 
+%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_ocomp $RPM_BUILD_ROOT%{_datadir}/%{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -44,8 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %dir %{_datadir}/%{name}
 # note that these DO NEED executable bit set!
-%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py
-%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py
-%attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py
-%attr(755,root,root) %{_datadir}/%{name}/readMetadata.py
+%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
+%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py*
+%attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
+%attr(755,root,root) %{_datadir}/%{name}/readMetadata.py*
 %{_mandir}/man8/createrepo.8*
