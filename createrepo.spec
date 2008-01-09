@@ -2,7 +2,7 @@ Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.9.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
@@ -36,6 +36,7 @@ pakietów RPM.
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
+	PKGDIR=%{py_sitescriptdir}/%{name} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -54,7 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 # note that these DO NEED executable bit set!
 %attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
 %attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
-%dir %{py_sitedir}/createrepo
-%{py_sitedir}/createrepo/*.py[co]
+%dir %{py_sitescriptdir}/createrepo
+%{py_sitescriptdir}/createrepo/*.py[co]
 %{_mandir}/man1/modifyrepo.1*
 %{_mandir}/man8/createrepo.8*
