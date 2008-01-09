@@ -9,7 +9,7 @@ Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
 # Source0-md5:	2a903c9f33c8a56dbfb89c2875d9978d
 #Patch0:		%{name}-missingok.patch
 URL:		http://linux.duke.edu/metadata/
-BuildRequires:	python-devel
+BuildRequires:	python-devel > 1:2.5
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 %pyrequires_eq  python
