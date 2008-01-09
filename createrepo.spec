@@ -52,6 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 # note that these DO NEED executable bit set!
 %attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
 %attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
+%dir %{py_sitedir}/createrepo
 %{py_sitedir}/createrepo/*.py[co]
 %{_mandir}/man1/modifyrepo.1*
 %{_mandir}/man8/createrepo.8*
