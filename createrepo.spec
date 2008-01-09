@@ -7,7 +7,7 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
 # Source0-md5:	2a903c9f33c8a56dbfb89c2875d9978d
-Patch0:		%{name}-missingok.patch
+#Patch0:		%{name}-missingok.patch
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
@@ -29,7 +29,7 @@ pakietów RPM.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -38,6 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
 %py_ocomp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -45,11 +46,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/createrepo
+%attr(755,root,root) %{_bindir}/modifyrepo
 %dir %{_datadir}/%{name}
 # note that these DO NEED executable bit set!
 %attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
-%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py*
 %attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
-%attr(755,root,root) %{_datadir}/%{name}/readMetadata.py*
+%{py_sitedir}/createrepo/*.py[co]
+%{_mandir}/man1/modifyrepo.1*
 %{_mandir}/man8/createrepo.8*
