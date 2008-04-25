@@ -1,20 +1,22 @@
 Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
-Version:	0.4.8
-Release:	2
+Version:	0.9.5
+Release:	1
 License:	GPL
 Group:		Applications/System
-Source0:	http://linux.duke.edu/projects/metadata/generate/%{name}-%{version}.tar.gz
-# Source0-md5:	49bab91ec050316352b6d8f0f450f060
+Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
+# Source0-md5:	0b96b0d70fee41d4358a74cad3e67a81
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
+BuildRequires:	sed >= 4.0
 %pyrequires_eq  python
 Requires:	python-libxml2
 Requires:	python-rpm
-Requires:	yum-metadata-parser
+Requires:	yum >= 3.2.11-1
+Requires:	yum-metadata-parser >= 1.1.1-3
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -29,9 +31,17 @@ pakietów RPM.
 %prep
 %setup -q
 
+%{__sed} -i -e '1s,#!.*python,#!%{__python},' modifyrepo.py
+
 %install
 rm -rf $RPM_BUILD_ROOT
-%makeinstall
+%{__make} install \
+	PKGDIR=%{py_sitescriptdir}/%{name} \
+	DESTDIR=$RPM_BUILD_ROOT
+
+%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_ocomp $RPM_BUILD_ROOT%{_datadir}/%{name}
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -39,9 +49,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/createrepo
+%attr(755,root,root) %{_bindir}/modifyrepo
 %dir %{_datadir}/%{name}
-%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py
-%attr(755,root,root) %{_datadir}/%{name}/dumpMetadata.py
-%attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py
+# note that these DO NEED executable bit set!
+%attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
+%attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
+%dir %{py_sitescriptdir}/createrepo
+%{py_sitescriptdir}/createrepo/*.py[co]
+%{_mandir}/man1/modifyrepo.1*
 %{_mandir}/man8/createrepo.8*
