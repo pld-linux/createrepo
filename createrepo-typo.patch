@@ -1,0 +1,11 @@
+--- createrepo-0.9.5/createrepo/__init__.py~	2008-02-18 21:30:13.000000000 +0100
++++ createrepo-0.9.5/createrepo/__init__.py	2008-09-01 21:42:52.356081079 +0200
+@@ -369,7 +369,7 @@
+         # and work down from there for the baseurl
+ 
+         if po.checksum in (None, ""):
+-            raise MDError, "No Package ID found for package %s, not going to add it" % e
++            raise MDError, "No Package ID found for package %s, not going to add it" % rpmfile
+         
+         return po
+ 
