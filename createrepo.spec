@@ -1,12 +1,12 @@
 Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
-Version:	0.9.5
-Release:	4
+Version:	0.9.6
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
-# Source0-md5:	0b96b0d70fee41d4358a74cad3e67a81
+# Source0-md5:	d8b11b3b38205fe351497c7e10ae5500
 Patch0:		%{name}-typo.patch
 URL:		http://linux.duke.edu/metadata/
 BuildRequires:	python-devel
@@ -52,12 +52,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/createrepo
+%attr(755,root,root) %{_bindir}/mergerepo
 %attr(755,root,root) %{_bindir}/modifyrepo
 %dir %{_datadir}/%{name}
 # note that these DO NEED executable bit set!
 %attr(755,root,root) %{_datadir}/%{name}/genpkgmetadata.py*
+%attr(755,root,root) %{_datadir}/%{name}/mergerepo.py*
 %attr(755,root,root) %{_datadir}/%{name}/modifyrepo.py*
 %dir %{py_sitescriptdir}/createrepo
 %{py_sitescriptdir}/createrepo/*.py[co]
+%{_mandir}/man1/mergerepo.1*
 %{_mandir}/man1/modifyrepo.1*
 %{_mandir}/man8/createrepo.8*
