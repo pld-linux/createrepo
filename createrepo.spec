@@ -2,7 +2,7 @@ Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.9.6
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://linux.duke.edu/createrepo/download/%{name}-%{version}.tar.gz
