@@ -1,13 +1,12 @@
 diff -burNp createrepo-0.9.6/createrepo/__init__.py createrepo-0.9.6-new/createrepo/__init__.py
 --- createrepo-0.9.6/createrepo/__init__.py	2008-10-28 20:58:14.000000000 +0100
 +++ createrepo-0.9.6-new/createrepo/__init__.py	2009-01-14 20:58:39.060166556 +0100
-@@ -415,7 +415,8 @@ class MetaDataGenerator:
+@@ -415,7 +415,7 @@ class MetaDataGenerator:
                  self.rpmlib_reqs[r] = 1
             
          if po.checksum in (None, ""):
 -            raise MDError, "No Package ID found for package %s, not going to add it" % po
-+            raise MDError, "No Package ID found for package %s, not
-+    going to add it" % rpmfile
++            raise MDError, "No Package ID found for package %s, not going to add it" % rpmfile
          
          return po
  
