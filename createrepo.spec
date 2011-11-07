@@ -13,6 +13,7 @@ BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
 %pyrequires_eq  python
+Requires:	python-deltarpm
 Requires:	python-libxml2
 Requires:	python-rpm
 Requires:	yum >= 3.2.23
