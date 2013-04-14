@@ -9,6 +9,7 @@ Source0:	http://createrepo.baseurl.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	10641f19a40e9f633b300e23dde00349
 Patch0:		%{name}-head.patch
 URL:		http://createrepo.baseurl.org/
+BuildRequires:	bash-completion >= 2.0
 BuildRequires:	python-devel
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
