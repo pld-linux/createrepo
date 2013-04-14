@@ -1,3 +1,41 @@
+diff --git a/Makefile b/Makefile
+index 60bb9db..0b5738b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,5 @@
+ PKGNAME = createrepo
++ALIASES = mergerepo modifyrepo genpkgmetadata.py mergerepo.py modifyrepo.py
+ VERSION=$(shell awk '/Version:/ { print $$2 }' ${PKGNAME}.spec)
+ RELEASE=$(shell awk '/Release:/ { print $$2 }' ${PKGNAME}.spec)
+ CVSTAG=createrepo-$(subst .,_,$(VERSION)-$(RELEASE))
+@@ -26,6 +27,8 @@ docdir =
+ includedir = ${prefix}/include
+ oldincludedir = /usr/include
+ mandir = ${prefix}/share/man
++compdir = $(shell pkg-config --variable=completionsdir bash-completion)
++compdir := $(or $(compdir), "/etc/bash_completion.d")
+ 
+ pkgdatadir = $(datadir)/$(PKGNAME)
+ pkglibdir = $(libdir)/$(PKGNAME)
+@@ -33,7 +36,7 @@ pkgincludedir = $(includedir)/$(PKGNAME)
+ top_builddir = 
+ 
+ # all dirs
+-DIRS = $(DESTDIR)$(bindir) $(DESTDIR)$(sysconfdir)/bash_completion.d \
++DIRS = $(DESTDIR)$(bindir) $(DESTDIR)$(compdir) \
+ 	$(DESTDIR)$(pkgdatadir) $(DESTDIR)$(mandir)
+ 
+ 
+@@ -65,7 +68,8 @@ check:
+ 
+ install: all installdirs
+ 	$(INSTALL_MODULES) $(srcdir)/$(MODULES) $(DESTDIR)$(pkgdatadir)
+-	$(INSTALL_DATA) $(PKGNAME).bash $(DESTDIR)$(sysconfdir)/bash_completion.d
++	$(INSTALL_DATA) $(PKGNAME).bash $(DESTDIR)$(compdir)/$(PKGNAME)
++	(cd $(DESTDIR)$(compdir); for n in $(ALIASES); do ln -s $(PKGNAME) $$n; done)
+ 	for subdir in $(SUBDIRS) ; do \
+ 	  $(MAKE) -C $$subdir install VERSION=$(VERSION) PKGNAME=$(PKGNAME); \
+ 	done
 diff --git a/createrepo.bash b/createrepo.bash
 index 54ac8b2..f5a8bb7 100644
 --- a/createrepo.bash
@@ -101,19 +139,41 @@ index 54ac8b2..f5a8bb7 100644
          fi
      done
 diff --git a/createrepo.spec b/createrepo.spec
-index 1e491cd..eea7092 100644
+index 1e491cd..cdd8b6f 100644
 --- a/createrepo.spec
 +++ b/createrepo.spec
-@@ -11,7 +11,7 @@ URL: http://createrepo.baseurl.org/
+@@ -1,4 +1,10 @@
+ %{!?python_sitelib: %define python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
++# disable broken /usr/lib/rpm/brp-python-bytecompile
++%define __os_install_post %{nil}
++%define compdir %(pkg-config --variable=completionsdir bash-completion)
++%if "%{compdir}" == ""
++%define compdir "/etc/bash_completion.d"
++%endif
+ 
+ Summary: Creates a common metadata repository
+ Name: createrepo
+@@ -10,8 +16,9 @@ Source: %{name}-%{version}.tar.gz
+ URL: http://createrepo.baseurl.org/
  BuildRoot: %{_tmppath}/%{name}-%{version}root
  BuildArchitectures: noarch
++BuildRequires: bash-completion
  Requires: python >= 2.1, rpm-python, rpm >= 0:4.1.1, libxml2-python
 -Requires: yum-metadata-parser, yum >= 3.2.29, python-deltarpm
 +Requires: yum-metadata-parser, yum >= 3.2.29, python-deltarpm, pyliblzma
  
  %description
  This utility will generate a common metadata repository from a directory of
-@@ -43,6 +43,9 @@ make DESTDIR=$RPM_BUILD_ROOT sysconfdir=%{_sysconfdir} install
+@@ -32,7 +39,7 @@ make DESTDIR=$RPM_BUILD_ROOT sysconfdir=%{_sysconfdir} install
+ %defattr(-, root, root)
+ %dir %{_datadir}/%{name}
+ %doc ChangeLog README COPYING COPYING.lib
+-%{_sysconfdir}/bash_completion.d/
++%(dirname %{compdir})
+ %{_datadir}/%{name}/*
+ %{_bindir}/%{name}
+ %{_bindir}/modifyrepo
+@@ -43,6 +50,9 @@ make DESTDIR=$RPM_BUILD_ROOT sysconfdir=%{_sysconfdir} install
  %{python_sitelib}/createrepo
  
  %changelog
@@ -1499,7 +1559,7 @@ index 05e5f5e..80cb1a8 100755
  if __name__ == "__main__":
      main(sys.argv[1:])
 diff --git a/modifyrepo.py b/modifyrepo.py
-index 17094a4..bf1eec0 100755
+index 17094a4..acdde77 100755
 --- a/modifyrepo.py
 +++ b/modifyrepo.py
 @@ -1,11 +1,15 @@
@@ -1630,9 +1690,12 @@ index 17094a4..bf1eec0 100755
  
          new_rd = RepoData()
          new_rd.type = mdtype
-@@ -105,18 +144,28 @@ class RepoMetadata:
+@@ -103,20 +142,30 @@ class RepoMetadata:
+         new_rd.checksum = (self.checksum_type, csum)
+         new_rd.openchecksum = (self.checksum_type, open_csum)
          new_rd.size = str(os.stat(destmd).st_size)
-         new_rd.timestamp = str(os.stat(destmd).st_mtime)
+-        new_rd.timestamp = str(os.stat(destmd).st_mtime)
++        new_rd.timestamp = str(int(os.stat(destmd).st_mtime))
          self.repoobj.repoData[new_rd.type] = new_rd
 -        
 -        print "           type =", new_rd.type
@@ -1716,7 +1779,7 @@ index 17094a4..bf1eec0 100755
  if __name__ == '__main__':
      ret = main(sys.argv[1:])
 diff --git a/worker.py b/worker.py
-index eb35ef7..fe6758f 100755
+index eb35ef7..b67b5bd 100755
 --- a/worker.py
 +++ b/worker.py
 @@ -5,6 +5,7 @@ import yum
@@ -1747,7 +1810,12 @@ index eb35ef7..fe6758f 100755
      
      for strs in opts.pkgoptions:
          k,v = strs.split('=')
-@@ -64,15 +63,34 @@ def main(args):
+@@ -61,18 +60,39 @@ def main(args):
+             v = None
+         globalopts[k] = v
+ 
++    # turn off buffering on stdout
++    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
      
      reldir = external_data['_reldir']
      ts = rpmUtils.transaction.initReadOnlyTransaction()
@@ -1787,7 +1855,7 @@ index eb35ef7..fe6758f 100755
              continue
  
          try:
-@@ -80,20 +98,17 @@ def main(args):
+@@ -80,20 +100,17 @@ def main(args):
                  print "reading %s" % (pkgfile)
  
              pkg = createrepo.yumbased.CreateRepoPackage(ts, package=pkgpath, 

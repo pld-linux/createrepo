@@ -2,7 +2,7 @@ Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.9.9
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://createrepo.baseurl.org/download/%{name}-%{version}.tar.gz
@@ -36,7 +36,7 @@ Summary:	bash-completion for createrepo
 Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla createrepo
 Group:		Applications/Shells
 Requires:	%{name}
-Requires:	bash-completion
+Requires:	bash-completion >= 2.0
 
 %description -n bash-completion-%{name}
 bash-completion for createrepo.
@@ -85,4 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n bash-completion-%{name}
 %defattr(644,root,root,755)
-/etc/bash_completion.d/createrepo.bash
+%{_datadir}/bash-completion/completions/createrepo
+%{_datadir}/bash-completion/completions/genpkgmetadata.py
+%{_datadir}/bash-completion/completions/mergerepo
+%{_datadir}/bash-completion/completions/mergerepo.py
+%{_datadir}/bash-completion/completions/modifyrepo
+%{_datadir}/bash-completion/completions/modifyrepo.py
