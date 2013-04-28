@@ -2,12 +2,13 @@ Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
 Version:	0.9.9
-Release:	3
+Release:	3.1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://createrepo.baseurl.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	10641f19a40e9f633b300e23dde00349
 Patch0:		%{name}-head.patch
+Patch1:		rpm5-caps.patch
 URL:		http://createrepo.baseurl.org/
 BuildRequires:	bash-completion >= 2.0
 BuildRequires:	python-devel
@@ -48,6 +49,7 @@ bashowe uzupełnianie nazw dla createrepo.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %{__sed} -i -e '1s,#!.*python,#!%{__python},' modifyrepo.py
 
