@@ -1,17 +1,17 @@
 Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
-Version:	0.10
+Version:	0.10.1
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://createrepo.baseurl.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	55f83ca2f2d137490ea2182a354d2e68
+# Source0-md5:	eaeb274284172d10d41600e22bce9320
 Patch1:		rpm5-caps.patch
 URL:		http://createrepo.baseurl.org/
-BuildRequires:	bash-completion >= 2.0
 BuildRequires:	python-devel
 BuildRequires:	python-modules
+BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
 Requires:	python
@@ -33,17 +33,17 @@ To narzędzie tworzy wspólne repozytorium metadanych z katalogu
 pakietów RPM.
 
 %package -n bash-completion-%{name}
-Summary:	bash-completion for createrepo
-Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla createrepo
+Summary:	bash-completion for createrepo commands
+Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla poleceń createrepo
 Group:		Applications/Shells
-Requires:	%{name}
+Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
 
 %description -n bash-completion-%{name}
-bash-completion for createrepo.
+bash-completion for createrepo commands.
 
 %description -n bash-completion-%{name} -l pl.UTF-8
-bashowe uzupełnianie nazw dla createrepo.
+bashowe uzupełnianie nazw dla poleceń createrepo.
 
 %prep
 %setup -q
@@ -54,6 +54,7 @@ bashowe uzupełnianie nazw dla createrepo.
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
+	compdir=%{bash_compdir} \
 	sysconfdir=%{_sysconfdir} \
 	PKGDIR=%{py_sitescriptdir}/%{name} \
 	DESTDIR=$RPM_BUILD_ROOT
