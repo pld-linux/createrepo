@@ -1,12 +1,12 @@
 Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
-Version:	0.10.1
+Version:	0.10.2
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://createrepo.baseurl.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	eaeb274284172d10d41600e22bce9320
+# Source0-md5:	6947172cef6e0dd0847faa6467f68b4e
 Patch1:		rpm5-caps.patch
 URL:		http://createrepo.baseurl.org/
 BuildRequires:	python-devel
