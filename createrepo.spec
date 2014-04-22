@@ -11,8 +11,8 @@ Patch1:		rpm5-caps.patch
 URL:		http://createrepo.baseurl.org/
 BuildRequires:	python-devel
 BuildRequires:	python-modules
-BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	sed >= 4.0
 Requires:	python
 Requires:	python-deltarpm
@@ -25,8 +25,8 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-This utility will generate a common metadata repository from a
-directory of RPM packages.
+A set of utilities for generating a common metadata repository from a
+directory of rpm packages and maintaining it.
 
 %description -l pl.UTF-8
 To narzędzie tworzy wspólne repozytorium metadanych z katalogu
