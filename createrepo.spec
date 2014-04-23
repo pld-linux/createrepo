@@ -26,11 +26,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 A set of utilities for generating a common metadata repository from a
-directory of rpm packages and maintaining it.
+directory of RPM packages and maintaining it.
 
 %description -l pl.UTF-8
-To narzędzie tworzy wspólne repozytorium metadanych z katalogu
-pakietów RPM.
+Zestaw narzędzi do generowania oraz utrzymywania wspólnego
+repozytorium metadanych z katalogu pakietów RPM.
 
 %package -n bash-completion-%{name}
 Summary:	bash-completion for createrepo commands
