@@ -1,3 +1,6 @@
+# NOTE:
+# - superseded by createrepo_c
+#   https://fedoraproject.org/wiki/Changes/Retire_YUM_3
 Summary:	Creates a common metadata repository
 Summary(pl.UTF-8):	Tworzenie wspólnego repozytorium metadanych
 Name:		createrepo
